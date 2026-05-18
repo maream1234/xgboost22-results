@@ -220,31 +220,26 @@
       values: [3200, 2700, 2100, 1980],
       top: 'Cryptography'
     },
-
     Intent_Label: {
       labels: ['Educational', 'Defensive Query', 'Analytical', 'Malicious'],
       values: [4200, 2800, 2100, 880],
       top: 'Educational'
     },
-
     Model_Type: {
       labels: ['XGBoost', 'Random Forest', 'Logistic Regression'],
       values: [3400, 3300, 3280],
       top: 'XGBoost'
     },
-
     Language: {
       labels: ['English', 'Arabic'],
       values: [7200, 2780],
       top: 'English'
     },
-
     Response_Complexity: {
       labels: ['Low', 'Medium', 'High'],
       values: [2200, 4800, 2980],
       top: 'Medium'
     },
-
     Ethical_Compliance: {
       labels: ['Compliant', 'Non-Compliant'],
       values: [9970, 10],
@@ -252,7 +247,7 @@
     }
   };
 
-  let chart;
+  let barChart;
   let pieChart;
 
   function analyzeFeature() {
@@ -263,41 +258,29 @@
     document.getElementById('topValue').innerText = data.top;
     document.getElementById('uniqueCount').innerText = data.labels.length;
 
-    if (chart) {
-      chart.destroy();
+    if (barChart) {
+      barChart.destroy();
     }
 
     if (pieChart) {
       pieChart.destroy();
     }
 
-    const ctx = document.getElementById('featureChart').getContext('2d');
+    const barCtx = document.getElementById('featureChart').getContext('2d');
 
-    chart = new Chart(ctx, {
+    barChart = new Chart(barCtx, {
       type: 'bar',
       data: {
         labels: data.labels,
         datasets: [{
           label: feature,
           data: data.values,
-          backgroundColor: [
-            '#3b82f6',
-            '#10b981',
-            '#f59e0b',
-            '#ef4444'
-          ],
-          borderRadius: 10
+          backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#ef4444'],
+          borderRadius: 8
         }]
       },
       options: {
         responsive: true,
-        plugins: {
-          legend: {
-            labels: {
-              color: 'black'
-            }
-          }
-        },
         scales: {
           y: {
             beginAtZero: true
@@ -305,9 +288,6 @@
         }
       }
     });
-  }
-
-  
 
     const pieCtx = document.getElementById('pieChart').getContext('2d');
 
@@ -317,8 +297,11 @@
         labels: data.labels,
         datasets: [{
           data: data.values,
-          backgroundColor: ['#3b82f6','#10b981','#f59e0b','#ef4444']
+          backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#ef4444']
         }]
+      },
+      options: {
+        responsive: true
       }
     });
   }
@@ -345,13 +328,13 @@
   }
 
   function downloadReport() {
-    const content = `Cybersecurity Dataset Analysis
+    const content = 'Cybersecurity Dataset Analysis
 
 Best Model: XGBoost
 Accuracy: 0.8998
 Precision: 0.8954
 Recall: 0.8998
-F1-Score: 0.8924`;
+F1-Score: 0.8924';
 
     const blob = new Blob([content], { type: 'text/plain' });
     const link = document.createElement('a');
